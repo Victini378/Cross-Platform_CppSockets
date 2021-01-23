@@ -8,18 +8,25 @@
 #include <unistd.h>
 #include <cerrno>
 
-#include <net/socketaddress.hpp>
+#include "socketaddress.hpp"
+
+#define HOSTNAME_ERROR -2
+#define CONNECT_ERROR -3
 
 namespace net {
 	class socket {
 		protected:
 			int socketfd;
-			struct sockaddr_in address;
-			socketaddress* sockaddr;
+			socketaddress* address;
 
 		public:
+			/**
+			 * Creates a socket instance
+			 */
 			socket() {
-
+				socketfd = ::socket(AF_INET, SOCK_STREAM, 0);
+				//if (socketfd == -1)
+					//todo throw
 			}
 
 			/**
@@ -31,12 +38,16 @@ namespace net {
 			 */
 			socket(int socket, struct sockaddr_in addr) {
 				socketfd = socket;
-				address = addr;
-
-				sockaddr = new socketaddress(addr);
+				address = new net::socketaddress(addr);
 			}
 
 			~socket();
+
+			int connect(std::string, int);
+
+
+			std::string read();
+
 
 			/**
 			 * Reads all data being sent from the client. The function will block until there's
@@ -51,6 +62,8 @@ namespace net {
 			 * @param the length of the character buffer
 			 */
 			int read(char*, int);
+
+			int sendln(std::string);
 
 			/**
 			 * Sends a string to the client
@@ -109,7 +122,7 @@ namespace net {
 			 * @return the socketaddress instance
 			 */
 			socketaddress* get_socketaddress() {
-				return sockaddr;
+				return address;
 			}
 	};
 };
