@@ -1,12 +1,23 @@
 #ifndef SOCKET_H
 #define SOCKET_H
 
-#include <sys/socket.h>
-#include <sys/types.h>
-#include <netinet/in.h>
 #include <string>
-#include <unistd.h>
 #include <cerrno>
+
+#ifdef _WIN32
+	#ifndef _WIN32_WINNT
+		#define _WIN32_WINNT 0x0501  /* Windows XP. */
+	#endif
+	#include <winsock2.h>
+	#include <Ws2tcpip.h>
+#else
+	#include <sys/socket.h>
+	#include <sys/types.h>
+	#include <netinet/in.h>
+	#include <unistd.h>
+
+	typedef int SOCKET;
+#endif
 
 #include "socketaddress.hpp"
 
@@ -16,7 +27,7 @@
 namespace net {
 	class socket {
 		protected:
-			int socketfd;
+			SOCKET socketfd;
 			socketaddress* address;
 
 		public:
@@ -24,9 +35,15 @@ namespace net {
 			 * Creates a socket instance
 			 */
 			socket() {
+			#ifdef _WIN32
+				WSADATA wsa_data;
+				WSAStartup(MAKEWORD(2,2), &wsa_data);
+				socketfd = ::socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+			#else
 				socketfd = ::socket(AF_INET, SOCK_STREAM, 0);
 				//if (socketfd == -1)
 					//todo throw
+			#endif
 			}
 
 			/**
@@ -36,7 +53,7 @@ namespace net {
 			 * @param the socket file descriptor
 			 * @param the address structure
 			 */
-			socket(int socket, struct sockaddr_in addr) {
+			socket(SOCKET socket, struct sockaddr_in addr) {
 				socketfd = socket;
 				address = new net::socketaddress(addr);
 			}
@@ -93,13 +110,18 @@ namespace net {
 			 * Closes the socket connection
 			 */
 			void close() {
-				if (socketfd == -1) {
+			#ifdef _WIN32
+				::closesocket(socketfd);
+			#else
+				if (socketfd == -1)
 					return;
-				}
 
 				::close(socketfd);
+			#endif
 			}
 
+			#ifdef _WIN32
+			#else
 			/**
 			 * Checks whether the socket is valid
 			 * @return true if the socket is valid, false otherwise
@@ -107,6 +129,7 @@ namespace net {
 			bool valid() {
 				return socketfd != -1;
 			}
+			#endif
 
 			/**
 			 * Gets the socket file descriptor

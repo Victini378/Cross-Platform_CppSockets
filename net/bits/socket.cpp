@@ -8,17 +8,34 @@
 net::socket::~socket() {
 	delete address;
 	close();
+
+	#ifdef _WIN32
+		WSACleanup();
+  	#endif
 }
 
-void net::socket::set_blocking() {
-	int opts = fcntl(socketfd, F_GETFL);
-	opts = opts & (~O_NONBLOCK);
-	fcntl(socketfd, F_SETFL, opts);
-}
+#ifdef _WIN32
+	void net::socket::set_blocking() {
+		unsigned long opts = 0;
+		ioctlsocket(socketfd, FIONBIO, &opts);
+	}
 
-void net::socket::set_unblocking() {
-	fcntl(socketfd, F_SETFL, O_NONBLOCK);
-}
+	void net::socket::set_unblocking() {
+		unsigned long opts = 1;
+		ioctlsocket(socketfd, FIONBIO, &opts);
+	}
+#else
+	void net::socket::set_blocking() {
+		int opts = fcntl(socketfd, F_GETFL);
+		opts = opts & (~O_NONBLOCK);
+		fcntl(socketfd, F_SETFL, opts);
+	}
+
+	void net::socket::set_unblocking() {
+		fcntl(socketfd, F_SETFL, O_NONBLOCK);
+	}
+#endif
+
 
 std::string net::socket::read() {
 	std::string response;
@@ -39,8 +56,8 @@ int net::socket::read(std::string& msg) {
 	msg.append(std::string(buffer, 0, bytes_read));
 	bytes_total += bytes_read;
 
-	// set non-blocking.
 	set_unblocking();
+
 
 	while (bytes_read > 0) {
 		memset(buffer, 0, DEFAULT_SOCKET_BUFFER);
@@ -54,8 +71,8 @@ int net::socket::read(std::string& msg) {
 		bytes_total += bytes_read;
 	}
 
-	// set back to blocking
 	set_blocking();
+
 
 	return bytes_total;
 }

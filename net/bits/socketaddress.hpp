@@ -1,8 +1,19 @@
 #ifndef SOCKET_ADDRESS_H
 #define SOCKET_ADDRESS_H
 
-#include <netinet/in.h>
-#include <arpa/inet.h>
+
+#ifdef _WIN32
+	#ifndef _WIN32_WINNT
+		#define _WIN32_WINNT 0x0501  /* Windows XP. */
+	#endif
+	#include <winsock2.h>
+	#include <Ws2tcpip.h>
+	#include "strlcpy.c"
+#else
+	#include <netinet/in.h>
+	#include <arpa/inet.h>
+#endif
+
 #include <string>
 #include <cstring>
 
@@ -21,8 +32,9 @@ namespace net {
 				port = addr.sin_port;
 
 				char ip[INET_ADDRSTRLEN];
+			
 				inet_ntop(addr.sin_family, &(addr.sin_addr), ip, INET_ADDRSTRLEN);
-
+				
 				address = std::string(ip);
 			}
 
@@ -47,7 +59,7 @@ namespace net {
 				addr.sin_family = AF_INET;
 				addr.sin_port = htons(port);
 
-				inet_aton(address.c_str(), &addr.sin_addr);
+				inet_pton(AF_INET, address.c_str(), &addr.sin_addr);
 
 				return addr;
 			}
