@@ -1,4 +1,4 @@
-C++11 Socket Class
+Cross-Platform C++11 Sockets
 ==================
 
 ## Creating a Server Socket
