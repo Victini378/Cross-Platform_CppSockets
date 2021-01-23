@@ -1,0 +1,5 @@
+/** @file include/net/socket
+ *  This is a victi C++ Library header.
+ */
+
+#include "bits/socket.hpp"
