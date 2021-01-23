@@ -23,3 +23,19 @@ while (true) {
 }
 
 ```
+
+## Creating a Socket (TCP Client)
+
+```
+
+net::socket* client = new net::socket();
+int err = server->listen();
+
+if (server->connect("127.0.0.1", 8002) == CONNECT_ERROR)
+    std::cerr << "Problem with connection!\n";
+
+client->send("Hello guys!");
+
+std::cout << client->read() << std::endl;
+
+```
