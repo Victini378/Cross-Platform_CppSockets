@@ -1,12 +1,7 @@
 #ifndef SERVERSOCKET_H
 #define SERVERSOCKET_H
 
-#include <sys/socket.h>
-#include <sys/types.h>
-#include <netinet/in.h>
-#include <unistd.h>
-#include <cerrno>
-#include <net/socket.hpp>
+#include "socket.hpp"
 
 namespace net {
 	class serversocket {

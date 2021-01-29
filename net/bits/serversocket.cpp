@@ -1,4 +1,4 @@
-#include "net/serversocket.hpp"
+#include "serversocket.hpp"
 
 net::serversocket::~serversocket() {
 	close();
