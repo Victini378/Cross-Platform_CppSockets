@@ -120,22 +120,23 @@ namespace net {
 			#endif
 			}
 
-			#ifdef _WIN32
-			#else
 			/**
 			 * Checks whether the socket is valid
 			 * @return true if the socket is valid, false otherwise
 			 */
 			bool valid() {
+			#ifdef _WIN32
+				return socketfd != INVALID_SOCKET;
+			#else
 				return socketfd != -1;
-			}
 			#endif
+			}
 
 			/**
 			 * Gets the socket file descriptor
 			 * @return the socket file descriptor
 			 */
-			int get_socket() {
+			SOCKET get_socket() {
 				return socketfd;
 			}
 

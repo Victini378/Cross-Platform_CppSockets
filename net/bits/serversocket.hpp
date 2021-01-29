@@ -5,14 +5,23 @@
 
 namespace net {
 	class serversocket {
+		private:
+			#ifdef _WIN32
+			void init() {
+				WSADATA wsa_data;
+				WSAStartup(MAKEWORD(2,2), &wsa_data);
+			}
+			#endif
+
 		protected:
 			int port;
 			int backlog;
 			std::string address;
 
-			int socketfd;
+			SOCKET socketfd;
 
 		public:
+
 			/**
 			 * Constructs a listening socket on the specified port.
 			 * The default address is 0.0.0.0 and the default backlog is 10.
@@ -20,6 +29,9 @@ namespace net {
 			 * @param the port to listen to
 			 */
 			serversocket(int port) {
+			#ifdef _WIN32
+				init();
+			#endif
 				this->port = port;
 				backlog = 10;
 				address = "0.0.0.0";
@@ -33,6 +45,9 @@ namespace net {
 			 * @param the number of backlogs
 			 */
 			serversocket(int port, int backlog) {
+			#ifdef _WIN32
+				init();
+			#endif
 				this->port = port;
 				this->backlog = backlog;
 				address = "0.0.0.0";
@@ -45,6 +60,9 @@ namespace net {
 			 * @param the address to bind to
 			 */
 			serversocket(int port, int backlog, std::string address) {
+			#ifdef _WIN32
+				init();
+			#endif
 				this->port = port;
 				this->backlog = backlog;
 				this->address = address;
@@ -68,11 +86,14 @@ namespace net {
 			 * Closes the listening socket
 			 */
 			void close() {
-				if (socketfd == -1) {
+			#ifdef _WIN32
+				::closesocket(socketfd);
+			#else
+				if (socketfd == -1)
 					return;
-				}
 
 				::close(socketfd);
+			#endif
 			}
 
 			/**
@@ -80,14 +101,18 @@ namespace net {
 			 * @return true the socket is valid, false otherwise
 			 */
 			bool valid() {
+			#ifdef _WIN32
+				return socketfd != INVALID_SOCKET;
+			#else
 				return socketfd != -1;
+			#endif
 			}
 
 			/**
 			 * Gets the socket file descriptor
 			 * @return the socket file descriptor
 			 */
-			int get_socket() {
+			SOCKET get_socket() {
 				return socketfd;
 			}
 	};
