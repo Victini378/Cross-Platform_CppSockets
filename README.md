@@ -20,6 +20,10 @@ while (true) {
         delete client;
         continue;
     }
+    
+    std::string message;
+    client->read(&message);
+    std::cout << "Message: " << message << std::endl;
 }
 
 ```
