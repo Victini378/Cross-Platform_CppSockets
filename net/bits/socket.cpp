@@ -103,3 +103,30 @@ int net::socket::connect(std::string address, int port) {
     
     return 0;
 }
+
+SOCKET net::socket::get_socket() {
+	return socketfd;
+}
+
+socketaddress* net::socket::get_socketaddress() {
+	return address;
+}
+
+bool net::socket::valid() {
+#ifdef _WIN32
+	return socketfd != INVALID_SOCKET;
+#else
+	return socketfd != -1;
+#endif
+}
+
+void net::socket::close() {
+#ifdef _WIN32
+	::closesocket(socketfd);
+#else
+	if (socketfd == -1)
+		return;
+
+	::close(socketfd);
+#endif
+}

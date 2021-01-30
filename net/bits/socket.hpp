@@ -53,8 +53,8 @@ namespace net {
 			 * @param the socket file descriptor
 			 * @param the address structure
 			 */
-			socket(SOCKET socket, struct sockaddr_in addr) {
-				socketfd = socket;
+			socket(SOCKET socketfd, struct sockaddr_in addr) {
+				this->socketfd = socket;
 				address = new net::socketaddress(addr);
 			}
 
@@ -109,45 +109,26 @@ namespace net {
 			/**
 			 * Closes the socket connection
 			 */
-			void close() {
-			#ifdef _WIN32
-				::closesocket(socketfd);
-			#else
-				if (socketfd == -1)
-					return;
-
-				::close(socketfd);
-			#endif
-			}
+			void close();
 
 			/**
 			 * Checks whether the socket is valid
 			 * @return true if the socket is valid, false otherwise
 			 */
-			bool valid() {
-			#ifdef _WIN32
-				return socketfd != INVALID_SOCKET;
-			#else
-				return socketfd != -1;
-			#endif
-			}
+			bool valid();
 
 			/**
 			 * Gets the socket file descriptor
 			 * @return the socket file descriptor
 			 */
-			SOCKET get_socket() {
-				return socketfd;
-			}
+			SOCKET get_socket();
 
 			/**
 			 * Gets the socketaddress instance of the socket, which contains
 			 * information about the socket's address and port
 			 * @return the socketaddress instance
 			 */
-			socketaddress* get_socketaddress() {
-				return address;
-			}
+			socketaddress* get_socketaddress();
 	};
 };
 
