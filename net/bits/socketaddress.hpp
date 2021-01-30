@@ -43,7 +43,7 @@ namespace net {
 			 * @param the address of the socket
 			 * @param the port
 			 */
-			socketaddress(std::string address, int port) {
+			socketaddress(const std::string address, const int port) {
 				this->address = address;
 				this->port = port;
 			}
@@ -52,19 +52,33 @@ namespace net {
 			 * Returns a sockaddr_in structure based on the information of the socketaddress instance
 			 * @return sockaddr_in structure
 			 */
-			struct sockaddr_in get_struct();
+			sockaddr_in get_struct() {
+				struct sockaddr_in addr;
+				memset(&addr, 0, sizeof addr);
+
+				addr.sin_family = AF_INET;
+				addr.sin_port = htons(port);
+
+				inet_pton(AF_INET, address.c_str(), &addr.sin_addr);
+
+				return addr;
+			}
 
 			/**
 			 * Gets the port of the socket
 			 * @return the port number
 			 */
-			int get_port();
+			int get_port() {
+				return port;
+			}
 
 			/**
 			 * Gets the address of the socket
 			 * @return the address
 			 */
-			std::string get_address();
+			std::string get_address() {
+				return address;
+			}
 	};
 };
 #endif
