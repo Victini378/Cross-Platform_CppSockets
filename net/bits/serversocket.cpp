@@ -45,3 +45,26 @@ net::socket* net::serversocket::accept() {
 
 	return new net::socket(clientfd, from);
 }
+
+bool net::socket::valid() {
+#ifdef _WIN32
+	return socketfd != INVALID_SOCKET;
+#else
+	return socketfd != -1;
+#endif
+}
+
+void net::socket::close() {
+#ifdef _WIN32
+	::closesocket(socketfd);
+#else
+	if (socketfd == -1)
+		return;
+
+	::close(socketfd);
+#endif
+}
+
+SOCKET net::socket::get_socket() {
+	return socketfd;
+}

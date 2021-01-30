@@ -85,36 +85,19 @@ namespace net {
 			/**
 			 * Closes the listening socket
 			 */
-			void close() {
-			#ifdef _WIN32
-				::closesocket(socketfd);
-			#else
-				if (socketfd == -1)
-					return;
-
-				::close(socketfd);
-			#endif
-			}
+			void close();
 
 			/**
 			 * Checks whether or not the socket is valid
 			 * @return true the socket is valid, false otherwise
 			 */
-			bool valid() {
-			#ifdef _WIN32
-				return socketfd != INVALID_SOCKET;
-			#else
-				return socketfd != -1;
-			#endif
-			}
+			bool valid();
 
 			/**
 			 * Gets the socket file descriptor
 			 * @return the socket file descriptor
 			 */
-			SOCKET get_socket() {
-				return socketfd;
-			}
+			SOCKET get_socket();
 	};
 };
 
