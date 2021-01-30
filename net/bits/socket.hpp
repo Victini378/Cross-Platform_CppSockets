@@ -41,9 +41,9 @@ namespace net {
 				socketfd = ::socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
 			#else
 				socketfd = ::socket(AF_INET, SOCK_STREAM, 0);
+			#endif
 				//if (socketfd == -1)
 					//todo throw
-			#endif
 			}
 
 			/**
@@ -54,13 +54,13 @@ namespace net {
 			 * @param the address structure
 			 */
 			socket(SOCKET socketfd, struct sockaddr_in addr) {
-				this->socketfd = socket;
+				this->socketfd = socketfd;
 				address = new net::socketaddress(addr);
 			}
 
 			~socket();
 
-			int connect(std::string, int);
+			int connect(const std::string, int);
 
 
 			std::string read();
@@ -78,15 +78,15 @@ namespace net {
 			 * @param the character buffer
 			 * @param the length of the character buffer
 			 */
-			int read(char*, int);
+			int read(char*, const int);
 
-			int sendln(std::string);
+			int sendln(const std::string);
 
 			/**
 			 * Sends a string to the client
 			 * @param the string to send
 			 */
-			int send(std::string);
+			int send(const std::string);
 
 			/**
 			 * Sends an array of charactes to the client, with a specified start and end index
@@ -94,7 +94,7 @@ namespace net {
 			 * @param the starting position
 			 * @param the length
 			 */
-			int send(const char*, int, int);
+			int send(const char*, const int, const int);
 
 			/**
 			 * Sets the socket in blocking mode

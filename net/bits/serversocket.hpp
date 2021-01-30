@@ -28,7 +28,7 @@ namespace net {
 			 *
 			 * @param the port to listen to
 			 */
-			serversocket(int port) {
+			serversocket(const int port) {
 			#ifdef _WIN32
 				init();
 			#endif
@@ -44,7 +44,7 @@ namespace net {
 			 * @param the port to listen to
 			 * @param the number of backlogs
 			 */
-			serversocket(int port, int backlog) {
+			serversocket(const int port, const int backlog) {
 			#ifdef _WIN32
 				init();
 			#endif
@@ -59,7 +59,7 @@ namespace net {
 			 * @param the number of backlogs
 			 * @param the address to bind to
 			 */
-			serversocket(int port, int backlog, std::string address) {
+			serversocket(const int port, const int backlog, const std::string address) {
 			#ifdef _WIN32
 				init();
 			#endif

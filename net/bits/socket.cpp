@@ -77,23 +77,23 @@ int net::socket::read(std::string& msg) {
 	return bytes_total;
 }
 
-int net::socket::read(char* buf, int len) {
+int net::socket::read(char* buf, const int len) {
 	return ::recv(socketfd, buf, len, 0);
 }
 
-int net::socket::sendln(std::string data) {
+int net::socket::sendln(const std::string data) {
 	return send(data + '\n');
 }
 
-int net::socket::send(std::string data) {
+int net::socket::send(const std::string data) {
 	return send(data.c_str(), data.length(), 0);
 }
 
-int net::socket::send(const char* buf, int len, int flags) {
+int net::socket::send(const char* buf, const int len, const int flags) {
 	return ::send(socketfd, buf, len, flags);
 }
 
-int net::socket::connect(std::string address, int port) {
+int net::socket::connect(const std::string address, const int port) {
 	this->address = new socketaddress(address, port);
 
 	struct sockaddr_in servaddr = this->address->get_struct();
@@ -108,7 +108,7 @@ SOCKET net::socket::get_socket() {
 	return socketfd;
 }
 
-socketaddress* net::socket::get_socketaddress() {
+net::socketaddress* net::socket::get_socketaddress() {
 	return address;
 }
 
