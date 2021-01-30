@@ -52,33 +52,19 @@ namespace net {
 			 * Returns a sockaddr_in structure based on the information of the socketaddress instance
 			 * @return sockaddr_in structure
 			 */
-			struct sockaddr_in get_struct() {
-				struct sockaddr_in addr;
-				memset(&addr, 0, sizeof addr);
-
-				addr.sin_family = AF_INET;
-				addr.sin_port = htons(port);
-
-				inet_pton(AF_INET, address.c_str(), &addr.sin_addr);
-
-				return addr;
-			}
+			struct sockaddr_in get_struct();
 
 			/**
 			 * Gets the port of the socket
 			 * @return the port number
 			 */
-			int get_port() {
-				return port;
-			}
+			int get_port();
 
 			/**
 			 * Gets the address of the socket
 			 * @return the address
 			 */
-			std::string get_address() {
-				return address;
-			}
+			std::string get_address();
 	};
 };
 #endif
