@@ -8,7 +8,7 @@
 	#endif
 	#include <winsock2.h>
 	#include <Ws2tcpip.h>
-	#include "external/strlcpy.c"
+	#include "external/inet_ntop.c"
 #else
 	#include <netinet/in.h>
 	#include <arpa/inet.h>
