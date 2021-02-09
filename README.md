@@ -1,8 +1,9 @@
 ![logo](logo_github.png)
 
-![Windows Build](https://github.com/Victini378/Cross-Platform_CppSockets/workflows/Windows%20Build/badge.svg)
-![Linux Build](https://github.com/Victini378/Cross-Platform_CppSockets/workflows/Linux%20Build/badge.svg)
-![macOS Build](https://github.com/Victini378/Cross-Platform_CppSockets/workflows/macOS%20Build/badge.svg)
+
+[![Windows Build](https://github.com/Victini378/Cross-Platform_CppSockets/workflows/Windows%20Build/badge.svg)](https://github.com/Victini378/Cross-Platform_CppSockets/actions)
+[![Linux Build](https://github.com/Victini378/Cross-Platform_CppSockets/workflows/Linux%20Build/badge.svg)](https://github.com/Victini378/Cross-Platform_CppSockets/actions)
+[![macOS Build](https://github.com/Victini378/Cross-Platform_CppSockets/workflows/macOS%20Build/badge.svg)](https://github.com/Victini378/Cross-Platform_CppSockets/actions)
 
 ## Creating a Server Socket
 
