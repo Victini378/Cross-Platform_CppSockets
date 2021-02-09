@@ -33,7 +33,7 @@ while (true) {
 
 net::socket* client = new net::socket();
 
-if (server->connect("127.0.0.1", 8002) == CONNECT_ERROR)
+if (client->connect("127.0.0.1", 8002) == CONNECT_ERROR)
     std::cerr << "Problem with connection!\n";
 
 client->sendln("Hello guys!");
