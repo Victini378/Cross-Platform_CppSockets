@@ -62,7 +62,10 @@ namespace net {
 
 			int connect(const std::string, int);
 
-
+			/**
+			 * Reads all data being sent from the client. The function will block until there's
+			 * data, and then read the rest if any.
+			 */
 			std::string read();
 
 
