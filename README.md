@@ -5,6 +5,15 @@
 [![Linux Build](https://github.com/Victini378/Cross-Platform_CppSockets/workflows/Linux%20Build/badge.svg)](https://github.com/Victini378/Cross-Platform_CppSockets/actions?query=workflow%3A"Linux+Build")
 [![macOS Build](https://github.com/Victini378/Cross-Platform_CppSockets/workflows/macOS%20Build/badge.svg)](https://github.com/Victini378/Cross-Platform_CppSockets/actions?query=workflow%3A"macOS+Build")
 
+## Why?
+
+I created these libraries because I didn't find a library for simple Sockets class (as Java) that was easy, clean and full C++ style. In addition, I'm a student looking for creative ideas so it seemed like an opportunity to train.\
+
+There're already libraries in C++ that allow you to use sockets in a structured way, but none of these have a simple syntax similar to the C++ Standard Library.\
+
+The initial structure starts from the davidsteinsland project, from which I fork, which, however, it changes quite a lot.\
+So make good use of it and remember that's completely open source under the GPLv3 license.
+
 ## Creating a Server Socket
 
 ```
