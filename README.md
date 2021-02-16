@@ -56,3 +56,7 @@ client->sendln("Hello guys!");
 std::cout << client->read() << std::endl;
 
 ```
+
+## License
+
+These libraries is licensed under the GNU GPL v3 License. Please read the License file to know about the usage terms and conditions.
