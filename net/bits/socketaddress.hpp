@@ -68,7 +68,7 @@ namespace net {
 			 * Gets the port of the socket
 			 * @return the port number
 			 */
-			int get_port() {
+			inline int get_port() {
 				return port;
 			}
 
@@ -76,7 +76,7 @@ namespace net {
 			 * Gets the address of the socket
 			 * @return the address
 			 */
-			std::string get_address() {
+			inline std::string get_address() {
 				return address;
 			}
 	};
