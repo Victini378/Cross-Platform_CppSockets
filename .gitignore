@@ -1,2 +1,2 @@
-*.komodoproject
-*.dSYM
+build/*
+!build/build.xml
