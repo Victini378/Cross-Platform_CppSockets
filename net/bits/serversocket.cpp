@@ -46,7 +46,7 @@ net::socket* net::serversocket::accept() {
 	return new net::socket(clientfd, from);
 }
 
-bool net::serversocket::valid() {
+inline bool net::serversocket::valid() {
 #ifdef _WIN32
 	return socketfd != INVALID_SOCKET;
 #else
@@ -54,7 +54,7 @@ bool net::serversocket::valid() {
 #endif
 }
 
-void net::serversocket::close() {
+inline void net::serversocket::close() {
 #ifdef _WIN32
 	::closesocket(socketfd);
 #else
@@ -65,6 +65,6 @@ void net::serversocket::close() {
 #endif
 }
 
-SOCKET net::serversocket::get_socket() {
+inline SOCKET net::serversocket::get_socket() {
 	return socketfd;
 }

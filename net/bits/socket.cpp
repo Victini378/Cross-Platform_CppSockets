@@ -15,35 +15,34 @@ net::socket::~socket() {
 }
 
 #ifdef _WIN32
-	void net::socket::set_blocking() {
+	inline void net::socket::set_blocking() {
 		unsigned long opts = 0;
 		ioctlsocket(socketfd, FIONBIO, &opts);
 	}
 
-	void net::socket::set_unblocking() {
+	inline void net::socket::set_unblocking() {
 		unsigned long opts = 1;
 		ioctlsocket(socketfd, FIONBIO, &opts);
 	}
 #else
-	void net::socket::set_blocking() {
+	inline void net::socket::set_blocking() {
 		int opts = fcntl(socketfd, F_GETFL);
 		opts = opts & (~O_NONBLOCK);
 		fcntl(socketfd, F_SETFL, opts);
 	}
 
-	void net::socket::set_unblocking() {
+	inline void net::socket::set_unblocking() {
 		fcntl(socketfd, F_SETFL, O_NONBLOCK);
 	}
 #endif
 
 
-std::string net::socket::read() {
+inline std::string net::socket::read() {
 	std::string response;
-	net::socket::read(response);
-	return response;
+	return net::socket::read(response);;
 }
 
-int net::socket::read(std::string const& msg) {
+int net::socket::read(std::string& msg) {
 	int bytes_total = 0;
 	char buffer[DEFAULT_SOCKET_BUFFER];
 
@@ -74,19 +73,19 @@ int net::socket::read(std::string const& msg) {
 	return bytes_total;
 }
 
-int net::socket::read(char* buf, const int len) {
+inline int net::socket::read(char* buf, const int len) {
 	return ::recv(socketfd, buf, len, 0);
 }
 
-int net::socket::sendln(std::string const& data) {
+inline int net::socket::sendln(std::string const& data) {
 	return send(data + '\n');
 }
 
-int net::socket::send(std::string const& data) {
+inline int net::socket::send(std::string const& data) {
 	return send(data.c_str(), data.length(), 0);
 }
 
-int net::socket::send(const char* buf, const int len, const int flags) {
+inline int net::socket::send(const char* buf, const int len, const int flags) {
 	return ::send(socketfd, buf, len, flags);
 }
 
@@ -101,15 +100,15 @@ int net::socket::connect(std::string const& address, const int port) {
     return 0;
 }
 
-SOCKET net::socket::get_socket() {
+inline SOCKET net::socket::get_socket() {
 	return socketfd;
 }
 
-net::socketaddress* net::socket::get_socketaddress() {
+inline net::socketaddress* net::socket::get_socketaddress() {
 	return address;
 }
 
-bool net::socket::valid() {
+inline bool net::socket::valid() {
 #ifdef _WIN32
 	return socketfd != INVALID_SOCKET;
 #else
@@ -117,7 +116,7 @@ bool net::socket::valid() {
 #endif
 }
 
-void net::socket::close() {
+inline void net::socket::close() {
 #ifdef _WIN32
 	::closesocket(socketfd);
 #else

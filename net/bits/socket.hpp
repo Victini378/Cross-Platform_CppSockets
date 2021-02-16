@@ -66,7 +66,7 @@ namespace net {
 			 * Reads all data being sent from the client. The function will block until there's
 			 * data, and then read the rest if any.
 			 */
-			std::string read();
+			inline std::string read();
 
 
 			/**
@@ -74,7 +74,7 @@ namespace net {
 			 * data, and then read the rest if any.
 			 * @param the string object to save the data into
 			 */
-			int read(std::string const&);
+			int read(std::string&);
 
 			/**
 			 * Reads a specified amount of data into a character pointer
@@ -83,13 +83,13 @@ namespace net {
 			 */
 			int read(char*, const int);
 
-			int sendln(std::string const&);
+			inline int sendln(std::string const&);
 
 			/**
 			 * Sends a string to the client
 			 * @param the string to send
 			 */
-			int send(std::string const&);
+			inline int send(std::string const&);
 
 			/**
 			 * Sends an array of charactes to the client, with a specified start and end index
@@ -97,41 +97,41 @@ namespace net {
 			 * @param the starting position
 			 * @param the length
 			 */
-			int send(const char*, const int, const int);
+			inline int send(const char*, const int, const int);
 
 			/**
 			 * Sets the socket in blocking mode
 			 */
-			void set_blocking();
+			inline void set_blocking();
 
 			/**
 			 * Sets the socket in non-blocking mode
 			 */
-			void set_unblocking();
+			inline void set_unblocking();
 
 			/**
 			 * Closes the socket connection
 			 */
-			void close();
+			inline void close();
 
 			/**
 			 * Checks whether the socket is valid
 			 * @return true if the socket is valid, false otherwise
 			 */
-			bool valid();
+			inline bool valid();
 
 			/**
 			 * Gets the socket file descriptor
 			 * @return the socket file descriptor
 			 */
-			SOCKET get_socket();
+			inline SOCKET get_socket();
 
 			/**
 			 * Gets the socketaddress instance of the socket, which contains
 			 * information about the socket's address and port
 			 * @return the socketaddress instance
 			 */
-			socketaddress* get_socketaddress();
+			inline socketaddress* get_socketaddress();
 	};
 };
 

@@ -85,19 +85,19 @@ namespace net {
 			/**
 			 * Closes the listening socket
 			 */
-			void close();
+			inline void close();
 
 			/**
 			 * Checks whether or not the socket is valid
 			 * @return true the socket is valid, false otherwise
 			 */
-			bool valid();
+			inline bool valid();
 
 			/**
 			 * Gets the socket file descriptor
 			 * @return the socket file descriptor
 			 */
-			SOCKET get_socket();
+			inline SOCKET get_socket();
 	};
 };
 
