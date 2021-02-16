@@ -59,7 +59,7 @@ namespace net {
 			 * @param the number of backlogs
 			 * @param the address to bind to
 			 */
-			serversocket(const int port, const int backlog, const std::string address) {
+			serversocket(const int port, const int backlog, std::string const& address) {
 			#ifdef _WIN32
 				init();
 			#endif

@@ -43,15 +43,14 @@ std::string net::socket::read() {
 	return response;
 }
 
-int net::socket::read(std::string& msg) {
+int net::socket::read(std::string const& msg) {
 	int bytes_total = 0;
 	char buffer[DEFAULT_SOCKET_BUFFER];
 
 	int bytes_read = recv(socketfd, buffer, DEFAULT_SOCKET_BUFFER, 0);
 
-	if (bytes_read <= 0) {
+	if (bytes_read <= 0)
 		return bytes_read;
-	}
 
 	msg.append(std::string(buffer, 0, bytes_read));
 	bytes_total += bytes_read;
@@ -63,16 +62,14 @@ int net::socket::read(std::string& msg) {
 		memset(buffer, 0, DEFAULT_SOCKET_BUFFER);
 		bytes_read = recv(socketfd, buffer, DEFAULT_SOCKET_BUFFER, 0);
 
-		if (bytes_read < 0) {
+		if (bytes_read < 0)
 			break;
-		}
 
 		msg.append(std::string(buffer, 0, bytes_read));
 		bytes_total += bytes_read;
 	}
 
 	set_blocking();
-
 
 	return bytes_total;
 }
@@ -81,11 +78,11 @@ int net::socket::read(char* buf, const int len) {
 	return ::recv(socketfd, buf, len, 0);
 }
 
-int net::socket::sendln(const std::string data) {
+int net::socket::sendln(std::string const& data) {
 	return send(data + '\n');
 }
 
-int net::socket::send(const std::string data) {
+int net::socket::send(std::string const& data) {
 	return send(data.c_str(), data.length(), 0);
 }
 
@@ -93,7 +90,7 @@ int net::socket::send(const char* buf, const int len, const int flags) {
 	return ::send(socketfd, buf, len, flags);
 }
 
-int net::socket::connect(const std::string address, const int port) {
+int net::socket::connect(std::string const& address, const int port) {
 	this->address = new socketaddress(address, port);
 
 	struct sockaddr_in servaddr = this->address->get_struct();

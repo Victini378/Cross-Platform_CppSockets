@@ -60,7 +60,7 @@ namespace net {
 
 			~socket();
 
-			int connect(const std::string, int);
+			int connect(std::string const&, int);
 
 			/**
 			 * Reads all data being sent from the client. The function will block until there's
@@ -74,7 +74,7 @@ namespace net {
 			 * data, and then read the rest if any.
 			 * @param the string object to save the data into
 			 */
-			int read(std::string&);
+			int read(std::string const&);
 
 			/**
 			 * Reads a specified amount of data into a character pointer
@@ -83,13 +83,13 @@ namespace net {
 			 */
 			int read(char*, const int);
 
-			int sendln(const std::string);
+			int sendln(std::string const&);
 
 			/**
 			 * Sends a string to the client
 			 * @param the string to send
 			 */
-			int send(const std::string);
+			int send(std::string const&);
 
 			/**
 			 * Sends an array of charactes to the client, with a specified start and end index

@@ -43,7 +43,7 @@ namespace net {
 			 * @param the address of the socket
 			 * @param the port
 			 */
-			socketaddress(const std::string address, const int port) {
+			socketaddress(std::string const& address, const int port) {
 				this->address = address;
 				this->port = port;
 			}
