@@ -39,7 +39,8 @@ net::socket::~socket() {
 
 inline std::string net::socket::read() {
 	std::string response;
-	return net::socket::read(response);;
+	net::socket::read(response);
+	return response;
 }
 
 int net::socket::read(std::string& msg) {
