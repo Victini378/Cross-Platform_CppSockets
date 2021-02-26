@@ -5,7 +5,7 @@
 [![Linux Build](https://github.com/Victini378/Cross-Platform_CppSockets/workflows/Linux%20Build/badge.svg)](https://github.com/Victini378/Cross-Platform_CppSockets/actions?query=workflow%3A"Linux+Build")
 [![macOS Build](https://github.com/Victini378/Cross-Platform_CppSockets/workflows/macOS%20Build/badge.svg)](https://github.com/Victini378/Cross-Platform_CppSockets/actions?query=workflow%3A"macOS+Build")
 [![license](https://img.shields.io/github/license/Victini378/Cross-Platform_CppSockets)](https://github.com/Victini378/Cross-Platform_CppSockets/blob/master/LICENSE.md)
-[![release](https://img.shields.io/github/v/release/Victini378/Cross-Platform_CppSockets?include_prereleases)](https://github.com/Victini378/Cross-Platform_CppSockets/releases)
+[![release](https://img.shields.io/github/v/release/Victini378/Cross-Platform_CppSockets?include_prereleases)](https://github.com/Victini378/Cross-Platform_CppSockets/releases/latest)
 
 ## Why?
 
