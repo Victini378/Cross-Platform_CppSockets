@@ -14,7 +14,7 @@ I created these libraries because I didn't find a library for simple Sockets cla
 There're already libraries in C++ that allow you to use sockets in a structured way, but none of these have a simple syntax similar to the C++ Standard Library.
 
 The initial structure starts from the davidsteinsland project, from which I fork, which, however, it changes quite a lot.\
-So make good use of it and remember that's completely open source under the GPLv3 license.
+So make good use of it and remember that's completely open source under the GPLv3 License.
 
 ## Creating a Server Socket
 
@@ -60,4 +60,4 @@ std::cout << client->read() << std::endl;
 
 ## License
 
-These libraries is licensed under the GNU GPL v3 License. Please read the License file to know about the usage terms and conditions.
+These libraries is licensed under the GNU GPLv3 License. Please read the License file to know about the usage terms and conditions.
