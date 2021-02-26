@@ -21,10 +21,10 @@ So make good use of it and remember that's completely open source under the GPLv
 ```
 
 net::serversocket* server = new net::serversocket(8080);
-int err = server->listen();
+const int err = server->listen();
 
 if (err != 0) {
-    std::cerr << strerror(err) << std::endl;
+    std::cerr << strerror(err) << '\n';
     exit(err);
 }
 
