@@ -58,7 +58,7 @@ namespace net {
 				address = new net::socketaddress(addr);
 			}
 
-			~socket();
+			virtual ~socket();
 
 			int connect(std::string const&, int);
 

@@ -68,7 +68,7 @@ namespace net {
 				this->address = address;
 			}
 
-			~serversocket();
+			virtual ~serversocket();
 
 			/**
 			 * Creates the listening socket and binds to the current port and address
