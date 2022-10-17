@@ -13,7 +13,7 @@ I created these libraries because I didn't find a library for simple Sockets cla
 
 There're already libraries in C++ that allow you to use sockets in a structured way, but none of these have a simple syntax similar to the C++ Standard Library.
 
-The initial structure starts from the davidsteinsland project, from which I fork, which, however, it changes quite a lot.\
+The initial structure starts from the davidsteinsland project, from which I fork.\
 So make good use of it and remember that's completely open source under the GPLv3 License.
 
 ## Creating a Server Socket
