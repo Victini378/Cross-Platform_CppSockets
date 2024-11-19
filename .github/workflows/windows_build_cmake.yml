@@ -1,42 +1,90 @@
 name: Windows Build
 
-on: [push]
+on:
+  push:
 
 jobs:
   build:
-    runs-on: ${{ matrix.os }}
+    name: ${{ matrix.config.name }}
+    runs-on: ${{ matrix.config.os }}
     strategy:
+      fail-fast: false
       matrix:
-        include:
-          - name: "Windows MSVC"
+        config:
+          - 
+            name: "Windows Latest MSVC"
+            artifact: "Windows-MSVC.tar.xz"
             os: windows-latest
+            build_type: "Release"
             cc: "cl"
             cxx: "cl"
-            build_type: "Release"
-            environment_script: '"C:/Program Files (x86)/Microsoft Visual Studio/2019/Enterprise/VC/Auxiliary/Build/vcvars64.bat"'
-          - name: "Windows MinGW"
+            environment_script: "C:/Program Files (x86)/Microsoft Visual Studio/2019/Enterprise/VC/Auxiliary/Build/vcvars64.bat"
+          - 
+            name: "Windows Latest MinGW"
+            artifact: "Windows-MinGW.tar.xz"
             os: windows-latest
+            build_type: "Release"
             cc: "gcc"
             cxx: "g++"
-            build_type: "Release"
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v3
+      - uses: actions/checkout@v1
 
-    - name: Install dependencies (CMake, Ninja)
-      run: |
-        choco install cmake --installargs 'ADD_CMAKE_TO_PATH=System' --yes
-        choco install ninja --yes
+      - name: Download Ninja and CMake
+        id: cmake_and_ninja
+        shell: bash
+        run: |
+          # Define versions
+          ninja_version="1.9.0"
+          cmake_version="3.16.2"
 
-    - name: Configure build
-      shell: cmd
-      run: |
-        call ${{ matrix.environment_script }}
-        cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} -DCMAKE_C_COMPILER=${{ matrix.cc }} -DCMAKE_CXX_COMPILER=${{ matrix.cxx }}
+          if [ "${{ runner.os }}" == "Windows-latest" ]; then
+            ninja_url="https://github.com/ninja-build/ninja/releases/download/v${ninja_version}/ninja-win.zip"
+            cmake_url="https://github.com/Kitware/CMake/releases/download/v${cmake_version}/cmake-${cmake_version}-win64-x64.zip"
+          elif [ "${{ runner.os }}" == "macOS-latest" ]; then
+            ninja_url="https://github.com/ninja-build/ninja/releases/download/v${ninja_version}/ninja-mac.zip"
+            cmake_url="https://github.com/Kitware/CMake/releases/download/v${cmake_version}/cmake-${cmake_version}-Darwin-x86_64.tar.gz"
+          elif [ "${{ runner.os }}" == "ubuntu-latest" ]; then
+            ninja_url="https://github.com/ninja-build/ninja/releases/download/v${ninja_version}/ninja-linux.zip"
+            cmake_url="https://github.com/Kitware/CMake/releases/download/v${cmake_version}/cmake-${cmake_version}-Linux-x86_64.tar.gz"
+          fi
 
-    - name: Build
-      shell: cmd
-      run: |
-        call ${{ matrix.environment_script }}
-        cmake --build build
+          # Download and extract Ninja
+          curl -L $ninja_url -o ninja.zip
+          unzip -o ninja.zip -d ninja
+          chmod +x ./ninja
+
+          # Download and extract CMake
+          curl -L $cmake_url -o cmake.zip
+          tar -xzvf cmake.zip --directory .
+          export CMAKE_DIR=$(pwd)/cmake-${cmake_version}-Linux-x86_64/bin
+
+      - name: Configure
+        shell: bash
+        run: |
+          set(ENV{CC} ${{ matrix.config.cc }})
+          set(ENV{CXX} ${{ matrix.config.cxx }})
+
+          if [ "${{ runner.os }}" == "Windows-latest" ]; then
+            eval $(cat <<EOF
+            ${matrix.config.environment_script}
+            export CMAKE_DIR=$(pwd)/cmake-${cmake_version}-win64-x64
+            EOF
+            )
+          fi
+
+          # Configure with CMake
+          cmake -B build -DCMAKE_C_COMPILER=${ENV_CC} -DCMAKE_CXX_COMPILER=${ENV_CXX}
+
+      - name: Build
+        shell: bash
+        run: |
+          if [ "${{ runner.os }}" == "Windows-latest" ]; then
+            eval $(cat <<EOF
+            ${matrix.config.environment_script}
+            EOF
+            )
+          fi
+
+          # Build with CMake
+          cmake --build build
